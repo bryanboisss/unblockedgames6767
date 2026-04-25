@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Games List</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <h1>Games List</h1>
+    <input type="text" id="search" placeholder="Search for a game..." onkeyup="searchGames()">
+    <ul id="games-list">
+        <li><a href="game1.html">Game 1</a></li>
+        <li><a href="game2.html">Game 2</a></li>
+        <li><a href="game3.html">Game 3</a></li>
+        <!-- Add more games as needed -->
+    </ul>
+    <script src="games.js"></script>
+    <script>
+        function searchGames() {
+            let input = document.getElementById('search').value.toLowerCase();
+            let games = document.getElementById('games-list').getElementsByTagName('li');
+            for (let i = 0; i < games.length; i++) {
+                let game = games[i].textContent.toLowerCase();
+                games[i].style.display = game.includes(input) ? '' : 'none';
+            }
+        }
+    </script>
+</body>
+</html>
