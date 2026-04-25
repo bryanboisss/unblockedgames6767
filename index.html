@@ -3,28 +3,46 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Games List</title>
-    <link rel="stylesheet" href="styles.css">
+    <title>Browser Games</title>
+    <style>
+        body { font-family: Arial, sans-serif; margin: 0; padding: 0; }
+        .container { width: 80%; margin: auto; overflow: hidden; }
+        #search { margin: 20px 0; }
+        .game-card { border: 1px solid #ccc; border-radius: 5px; padding: 10px; margin: 10px; display: inline-block; width: calc(20% - 20px); text-align: center; }
+        .game-card:hover { box-shadow: 0 0 5px rgba(0, 0, 0, 0.5); }
+        h2 { color: #333; }
+        .category { margin: 10px 0; }
+    </style>
 </head>
 <body>
-    <h1>Games List</h1>
-    <input type="text" id="search" placeholder="Search for a game..." onkeyup="searchGames()">
-    <ul id="games-list">
-        <li><a href="game1.html">Game 1</a></li>
-        <li><a href="game2.html">Game 2</a></li>
-        <li><a href="game3.html">Game 3</a></li>
-        <!-- Add more games as needed -->
-    </ul>
+    <div class="container">
+        <h1>100+ Browser Games</h1>
+        <input type="text" id="search" placeholder="Search for games..." onkeyup="searchGames()">
+        <div id="games-list"></div>
+    </div>
     <script src="games.js"></script>
     <script>
-        function searchGames() {
-            let input = document.getElementById('search').value.toLowerCase();
-            let games = document.getElementById('games-list').getElementsByTagName('li');
-            for (let i = 0; i < games.length; i++) {
-                let game = games[i].textContent.toLowerCase();
-                games[i].style.display = game.includes(input) ? '' : 'none';
-            }
+        const games = window.games;
+        const gamesList = document.getElementById('games-list');
+
+        function displayGames(games) {
+            gamesList.innerHTML = '';
+            games.forEach(game => {
+                const card = document.createElement('div');
+                card.className = 'game-card';
+                card.innerHTML = `<h2>${game.name}</h2><p>${game.category}</p>`;
+                card.onclick = () => window.location.href = game.link;
+                gamesList.appendChild(card);
+            });
         }
+
+        function searchGames() {
+            const query = document.getElementById('search').value.toLowerCase();
+            const filteredGames = games.filter(game => game.name.toLowerCase().includes(query));
+            displayGames(filteredGames);
+        }
+
+        displayGames(games);
     </script>
 </body>
 </html>
